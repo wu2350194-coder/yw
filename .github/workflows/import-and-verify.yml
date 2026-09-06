@@ -1,0 +1,75 @@
+name: Import and verify project
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore approved project archives
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib, shutil, zipfile
+          root = pathlib.Path.cwd().resolve()
+          manifest_file = root / 'upload-manifest.json'
+          if not manifest_file.exists():
+              print('Project already restored.')
+              raise SystemExit(0)
+          manifest = json.loads(manifest_file.read_text(encoding='utf-8-sig'))
+          expected = {'project-source.zip', 'project-photos.zip', 'project-video-1.zip', 'project-video-2.zip'}
+          assert set(manifest['archives']) == expected, 'Unexpected archive list'
+          for name, digest in manifest['archives'].items():
+              assert hashlib.sha256((root / name).read_bytes()).hexdigest() == digest, 'Archive checksum mismatch'
+          for name in sorted(expected):
+              with zipfile.ZipFile(root / name) as archive:
+                  for item in archive.infolist():
+                      relative = pathlib.PurePosixPath(item.filename)
+                      assert not relative.is_absolute() and '..' not in relative.parts
+                      assert relative.parts and relative.parts[0] != '.git'
+                      if item.filename.startswith('.github/workflows/'):
+                          continue
+                      target = (root / item.filename).resolve()
+                      assert target.is_relative_to(root)
+                      if item.is_dir():
+                          target.mkdir(parents=True, exist_ok=True)
+                      else:
+                          target.parent.mkdir(parents=True, exist_ok=True)
+                          target.write_bytes(archive.read(item))
+          for destination in manifest['migrationMedia']:
+              prefix = 'wechat-migration/backend/media/'
+              assert destination.startswith(prefix)
+              target = (root / destination).resolve()
+              assert target.is_relative_to(root / prefix)
+              original = (root / 'public' / destination.removeprefix(prefix)).resolve()
+              assert original.is_relative_to(root / 'public') and original.is_file()
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(original, target)
+          for removed in [2, 3, 6, 16]:
+              assert not (root / 'public/photos' / f'photo-{removed}.jpg').exists()
+          for name in expected:
+              (root / name).unlink()
+          manifest_file.unlink()
+          print('Source, 26 album photos, avatars and 2 videos restored; removed photos excluded.')
+          PY
+      - name: Commit restored project structure
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m 'Restore project source and approved media directories'
+            git push
+          fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test:sites
+      - run: node --test tests/auth-diary.test.mjs
+      - run: node wechat-migration/tests/verify.mjs
