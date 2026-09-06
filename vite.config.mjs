@@ -2,7 +2,10 @@ import {authPlugin} from './auth-plugin.mjs';
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+const pages = process.env.VITE_GITHUB_PAGES === 'true';
+const base = pages ? '/yw/' : '/';
 export default defineConfig({
+  base,
   build: {
     outDir: "dist/client",
   },
@@ -16,5 +19,9 @@ export default defineConfig({
       clientFiles: ["./src/main.jsx"],
     },
   },
-  plugins: [react(),authPlugin()],
+  plugins: [{name:'public-media-base',enforce:'pre',transform(code,id){
+    if (pages && /[/\\]src[/\\].*\.[jt]sx?$/.test(id)) {
+      return code.replace(/(["'])\/(photos|videos|maps)\//g, `$1${base}$2/`);
+    }
+  }},react(),authPlugin()],
 });

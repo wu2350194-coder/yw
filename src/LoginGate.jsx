@@ -1,6 +1,10 @@
 import {useState,useEffect} from 'react';
 import {Heart,LockKey,SignOut} from '@phosphor-icons/react';
-export function LoginGate({children}){const [user,setUser]=useState(null),[loading,setLoading]=useState(true),[role,setRole]=useState('him'),[password,setPassword]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false);
+export function LoginGate({children}) {
+ if(import.meta.env.VITE_GITHUB_PAGES==='true') return <><div className="account-bar"><Heart weight="fill"/><span>我们的公开纪念页</span><a href="#memories">翻开回忆</a><a href="#diary">关于日记同步</a></div>{children}</>;
+ return <ServerLoginGate>{children}</ServerLoginGate>;
+}
+function ServerLoginGate({children}){const [user,setUser]=useState(null),[loading,setLoading]=useState(true),[role,setRole]=useState('him'),[password,setPassword]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false);
 useEffect(()=>{fetch('/api/auth/me').then(r=>r.json()).then(d=>setUser(d.user)).catch(()=>setError('登录服务暂时不可用，请稍后刷新。')).finally(()=>setLoading(false));},[]);
 async function login(e){e.preventDefault();setBusy(true);setError('');try{const r=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role,password})});const d=await r.json();if(!r.ok)throw Error(d.error);setUser(d.user);setPassword('');location.hash='together';}catch(e){setError(e.message||'登录未成功');}finally{setBusy(false);}}
 async function logout(){try{const r=await fetch('/api/auth/logout',{method:'POST'});if(!r.ok)throw Error();setUser(null);setPassword('');}catch{setError('退出未成功，请重试。');}}
