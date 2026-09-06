@@ -1,0 +1,9 @@
+{
+  "desc": "私人情侣手账，不参与索引",
+  "rules": [
+    {
+      "action": "disallow",
+      "page": "*"
+    }
+  ]
+}

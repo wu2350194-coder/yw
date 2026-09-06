@@ -1,0 +1,195 @@
+module.exports = {
+  "photos": [
+    {
+      "id": 7,
+      "category": "小小日常",
+      "title": "牵着手，就是好天气",
+      "note": "把喜欢，放在掌心。",
+      "shape": "tall"
+    },
+    {
+      "id": 8,
+      "category": "书店约会",
+      "title": "书页之间，偷偷看你",
+      "note": "今天的心动，有迹可循。",
+      "shape": "tall"
+    },
+    {
+      "id": 9,
+      "category": "书店约会",
+      "title": "故事很长，我们慢慢读",
+      "note": "下一页，也一起。",
+      "shape": "tall"
+    },
+    {
+      "id": 4,
+      "category": "雨天散步",
+      "title": "收藏一个回头的瞬间",
+      "note": "刚好抬头，刚好是你。",
+      "shape": "tall"
+    },
+    {
+      "id": 1,
+      "category": "海洋馆",
+      "title": "蓝色里的小小心动",
+      "note": "这一刻，值得被记住。",
+      "shape": "tall"
+    },
+    {
+      "id": 5,
+      "category": "海洋馆",
+      "title": "和你看同一片蓝",
+      "note": "把温柔，留在相册里。",
+      "shape": "tall"
+    },
+    {
+      "id": 10,
+      "category": "一起冒险",
+      "title": "另一个世界，也和你同框",
+      "note": "把合照留在冒险手账里。",
+      "shape": "game"
+    },
+    {
+      "id": 11,
+      "category": "一起冒险",
+      "title": "收藏这片蓝色夜空",
+      "note": "这一站的风景，记下了。",
+      "shape": "game"
+    },
+    {
+      "id": 12,
+      "category": "一起冒险",
+      "title": "路上的小小奇遇",
+      "note": "走走停停，总有惊喜。",
+      "shape": "game"
+    },
+    {
+      "id": 13,
+      "category": "一起冒险",
+      "title": "和可爱一起合影",
+      "note": "可爱的瞬间，值得保存。",
+      "shape": "game"
+    },
+    {
+      "id": 14,
+      "category": "一起冒险",
+      "title": "草地上的快乐集合",
+      "note": "热闹的一刻，也收进相册。",
+      "shape": "game"
+    },
+    {
+      "id": 15,
+      "category": "一起冒险",
+      "title": "今天也是默契搭档",
+      "note": "这张合照，很喜欢。",
+      "shape": "game"
+    },
+    {
+      "id": 17,
+      "category": "一起冒险",
+      "title": "带上伙伴，一起出发",
+      "note": "下一站，还想一起。",
+      "shape": "game"
+    },
+    {
+      "id": 18,
+      "category": "一起冒险",
+      "title": "再收藏一颗星星",
+      "note": "同一片天空，不同的瞬间。",
+      "shape": "game"
+    },
+    {
+      "id": 19,
+      "category": "小小日常",
+      "title": "把这一刻的香气收藏",
+      "note": "音乐与香气，留在日常里。",
+      "shape": "tall"
+    },
+    {
+      "id": 20,
+      "category": "书店约会",
+      "title": "同一本故事里的我们",
+      "note": "这一页，刚好有你。",
+      "shape": "tall"
+    },
+    {
+      "id": 21,
+      "category": "小小日常",
+      "title": "新收藏的一帧",
+      "note": "让照片留住这一刻。",
+      "shape": "tall"
+    },
+    {
+      "id": 22,
+      "category": "雨天散步",
+      "title": "雨声里的温柔",
+      "note": "把这一刻，轻轻收藏。",
+      "shape": "tall"
+    },
+    {
+      "id": 23,
+      "category": "雨天散步",
+      "title": "跟着你的脚步",
+      "note": "连背影都想记住。",
+      "shape": "tall"
+    },
+    {
+      "id": 24,
+      "category": "雨天散步",
+      "title": "伞下的一点安静",
+      "note": "雨慢慢下，我们慢慢走。",
+      "shape": "tall"
+    },
+    {
+      "id": 25,
+      "category": "小小日常",
+      "title": "成双的小可爱",
+      "note": "小小的摆件，大大的可爱。",
+      "shape": "tall"
+    },
+    {
+      "id": 26,
+      "category": "小小日常",
+      "title": "把心意装进礼物里",
+      "note": "花和惊喜，都值得留念。",
+      "shape": "tall"
+    },
+    {
+      "id": 27,
+      "category": "小小日常",
+      "title": "两张票，一场约会",
+      "note": "一起走进银幕里的故事。",
+      "shape": "tall"
+    },
+    {
+      "id": 28,
+      "category": "书店约会",
+      "title": "躲在书页后面的你",
+      "note": "翻开书，也收藏一个瞬间。",
+      "shape": "tall"
+    },
+    {
+      "id": 29,
+      "category": "书店约会",
+      "title": "书架旁的温柔",
+      "note": "刚好停留，刚好心动。",
+      "shape": "tall"
+    },
+    {
+      "id": 30,
+      "category": "书店约会",
+      "title": "坐下来，慢慢读",
+      "note": "让时间在书页间停一会儿。",
+      "shape": "tall"
+    }
+  ],
+  "site": {
+    "name": "我们的日常",
+    "tagline": "把喜欢，写进每一天。",
+    "currentTheme": {
+      "label": "本期纪念 · 抖音火花",
+      "days": 1000,
+      "caption": "第 1000 天，喜欢还在继续"
+    }
+  }
+};

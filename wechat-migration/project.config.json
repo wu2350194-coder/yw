@@ -1,0 +1,12 @@
+{
+  "description": "我们的日常 · 原生微信小程序迁移准备",
+  "miniprogramRoot": "miniprogram/",
+  "compileType": "miniprogram",
+  "appid": "",
+  "projectname": "our-everyday",
+  "setting": {
+    "es6": true,
+    "minified": true,
+    "urlCheck": true
+  }
+}

@@ -1,0 +1,11 @@
+[Unit]
+Description=Our Everyday API
+After=network.target
+[Service]
+User=journal
+WorkingDirectory=/opt/our-everyday
+EnvironmentFile=/opt/our-everyday/.env
+ExecStart=/usr/bin/node server/http.js
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,2 @@
+const api=require('../../utils/api');
+Page({data:{role:'him',password:'',busy:false,error:''},choose(e){this.setData({role:e.currentTarget.dataset.role});},input(e){this.setData({password:e.detail.value});},async login(){if(this.data.busy)return;this.setData({busy:true,error:''});try{const d=await api.request('/api/auth/login','POST',{role:this.data.role,password:this.data.password});getApp().globalData.role=d.user.role;this.setData({password:''});wx.reLaunch({url:'/pages/home/index'});}catch(e){this.setData({error:e.message});}finally{this.setData({busy:false});}}});

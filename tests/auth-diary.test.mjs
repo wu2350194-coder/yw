@@ -1,0 +1,18 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {DatabaseSync} from 'node:sqlite';import {readFileSync,readdirSync} from 'node:fs';import {api,passwordHash} from '../server/api.js';
+test('two logins share diary, author edits only, stale writes and unauthenticated access rejected',async()=>{const db=new DatabaseSync(':memory:');for(const n of readdirSync('.openai/drizzle').filter(n=>n.endsWith('.sql')))db.exec(readFileSync('.openai/drizzle/'+n,'utf8'));const env={AUTH_HIM:'test-him:'+await passwordHash('test-one','test-him'),AUTH_HER:'test-her:'+await passwordHash('test-two','test-her'),DB:{prepare(sql){const s=db.prepare(sql);let a=[];return{bind(...v){a=v;return this;},async first(){return s.get(...a)||null;},async all(){return{results:s.all(...a)};},async run(){return{meta:{changes:Number(s.run(...a).changes)}};}};}}};const call=(path,method='GET',data,cookie)=>api(new Request('https://journal.test'+path,{method,headers:{'Content-Type':'application/json',...(cookie?{cookie}:{})},...(data?{body:JSON.stringify(data)}:{})}),env);
+assert.equal((await call('/api/diary')).status,401);assert.equal((await call('/api/auth/login','POST',{role:'him',password:'wrong'})).status,401);
+const login1=await call('/api/auth/login','POST',{role:'him',password:'test-one'}),login2=await call('/api/auth/login','POST',{role:'her',password:'test-two'});assert.equal(login1.status,200);assert.equal(login2.status,200);const c1=login1.headers.get('set-cookie').split(';')[0],c2=login2.headers.get('set-cookie').split(';')[0];assert.match(login1.headers.get('set-cookie'),/HttpOnly/);assert.match(login1.headers.get('set-cookie'),/Secure/);
+const entry={id:crypto.randomUUID(),title:'Test diary',body:'Shared body',date:'2026-09-05',mood:'开心'};assert.equal((await call('/api/diary','PUT',entry,c1)).status,200);const read=await(await call('/api/diary','GET',null,c2)).json();assert.equal(read.entries.length,1);assert.equal(read.entries[0].author,'him');assert.equal((await call('/api/diary','PUT',{...entry,version:1},c2)).status,403);assert.equal((await call('/api/diary','PUT',{...entry,version:1,body:'Updated'},c1)).status,200);assert.equal((await call('/api/diary','PUT',{...entry,version:1},c1)).status,409);
+assert.equal((await call('/api/together?mode=quiz')).status,401);
+const initial=await(await call('/api/together?mode=quiz','GET',null,c1)).json();
+assert.equal(initial.round,0);
+assert.equal((await call('/api/together','POST',{mode:'quiz',round:0,action:'answer',answer:'2'},c1)).status,200);
+let shared=await(await call('/api/together?mode=quiz','GET',null,c2)).json();
+assert.equal(shared.answers,null);assert.equal(shared.mine,null);assert.equal(shared.submitted.him,true);
+assert.equal((await call('/api/together','POST',{mode:'quiz',round:0,action:'next'},c2)).status,409);
+assert.equal((await call('/api/together','POST',{mode:'quiz',round:0,action:'answer',answer:'1'},c1)).status,409);
+shared=await(await call('/api/together','POST',{mode:'quiz',round:0,action:'answer',answer:'2'},c2)).json();
+assert.deepEqual(shared.answers,{him:'2',her:'2'});
+assert.equal((await call('/api/together','POST',{mode:'quiz',round:0,action:'next'},c1)).status,200);
+assert.equal((await call('/api/together','POST',{mode:'quiz',round:0,action:'answer',answer:'1'},c2)).status,409);
+await call('/api/auth/logout','POST',null,c1);assert.equal((await call('/api/diary','GET',null,c1)).status,401);db.close();});

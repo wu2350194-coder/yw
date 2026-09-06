@@ -1,0 +1,11 @@
+{
+  "name": "our-everyday-backend",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node server/http.js"
+  }
+}
