@@ -1,0 +1,40 @@
+{
+  "archives": {
+    "project-video-1.zip": "6a356468d5d3d888eddd7e88c7aee533e7b90cbbcf4db973dc4dd2c7e2a4c57f",
+    "project-photos.zip": "93d5c23191694b2e14d19e189c14d78f3c3fd341b09acf015aa1007ed5be20b4",
+    "project-video-2.zip": "36d988c0417f5b1ed64defbbd766db0d850f2a3f690c43b3149843b423c2b9cc",
+    "project-source.zip": "0e41157d28423e1ea6e0b311f377703e66cf5b715152805dab1d234fc2142341"
+  },
+  "migrationMedia": [
+    "wechat-migration/backend/media/photos/photo-1.jpg",
+    "wechat-migration/backend/media/photos/photo-10.jpg",
+    "wechat-migration/backend/media/photos/photo-11.jpg",
+    "wechat-migration/backend/media/photos/photo-12.jpg",
+    "wechat-migration/backend/media/photos/photo-13.jpg",
+    "wechat-migration/backend/media/photos/photo-14.jpg",
+    "wechat-migration/backend/media/photos/photo-15.jpg",
+    "wechat-migration/backend/media/photos/photo-17.jpg",
+    "wechat-migration/backend/media/photos/photo-18.jpg",
+    "wechat-migration/backend/media/photos/photo-19.jpg",
+    "wechat-migration/backend/media/photos/photo-20.jpg",
+    "wechat-migration/backend/media/photos/photo-21.jpg",
+    "wechat-migration/backend/media/photos/photo-22.jpg",
+    "wechat-migration/backend/media/photos/photo-23.jpg",
+    "wechat-migration/backend/media/photos/photo-24.jpg",
+    "wechat-migration/backend/media/photos/photo-25.jpg",
+    "wechat-migration/backend/media/photos/photo-26.jpg",
+    "wechat-migration/backend/media/photos/photo-27.jpg",
+    "wechat-migration/backend/media/photos/photo-28.jpg",
+    "wechat-migration/backend/media/photos/photo-29.jpg",
+    "wechat-migration/backend/media/photos/photo-30.jpg",
+    "wechat-migration/backend/media/photos/photo-4.jpg",
+    "wechat-migration/backend/media/photos/photo-5.jpg",
+    "wechat-migration/backend/media/photos/photo-7.jpg",
+    "wechat-migration/backend/media/photos/photo-8.jpg",
+    "wechat-migration/backend/media/photos/photo-9.jpg",
+    "wechat-migration/backend/media/videos/clip-1.mp4",
+    "wechat-migration/backend/media/videos/clip-2.mp4",
+    "wechat-migration/backend/media/videos/poster-1.jpg",
+    "wechat-migration/backend/media/videos/poster-2.jpg"
+  ]
+}
